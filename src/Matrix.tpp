@@ -1,16 +1,31 @@
 #include "Matrix.h"
 
 template<typename Y>
-Matrix<Y>::Matrix(const std::vector<std::vector<Y>>& matrix)
-    : instance(matrix), rows_count(matrix.size()), columns_count(matrix[0].size()) {
-    // for (const auto& row : matrix)
-    //     if (rows_count != columns_count) throw std::invalid_argument("Некорректные размеры матрицы");
+Matrix<Y>::Matrix(const std::vector<std::vector<Y>>& matrix):
+instance(matrix), rows_count(matrix.size()), columns_count(matrix[0].size()) { }
+
+template<typename Y>
+Matrix<Y>::Matrix(size_t rows, size_t columns, size_t default_value):
+rows_count(rows), columns_count(columns), instance(rows, std::vector<Y>(columns, default_value)) { }
+
+template<typename Y>
+Matrix<Y>::Matrix(size_t size, size_t default_value):
+rows_count(size), columns_count(size), instance(size, std::vector<Y>(size, default_value)) {
+    for (size_t i = 1; i < rows_count; ++i)
+        for (size_t j = 1; j < columns_count; ++j) {
+            instance[i][j] = instance[i][j - 1] + instance[i - 1][j];
+        }
 }
 
 template<typename Y>
-Matrix<Y>::Matrix(size_t rows, size_t columns)
-    : rows_count(rows), columns_count(columns), instance(rows, std::vector<Y>(columns)) {
-    // Выделение памяти для матрицы
+Y Matrix<Y>::max() {
+    Y max = std::numeric_limits<Y>::min();
+
+    for (const auto& row : instance)
+        for (int value : row)
+            if (value > max) max = value;
+
+    return max;
 }
 
 // Получение элемента матрицы
@@ -44,33 +59,34 @@ Matrix<Y> Matrix<Y>::T() const {
 
 
 template<typename Y>
-Y Matrix<Y>::sum_above_main_diagonal() const {
+Y Matrix<Y>::sum_above_main_diagonal() {
     if (rows_count != columns_count) throw std::invalid_argument("Матрица должна быть квадратной для вычисления суммы над главной диагональю");
 
     Y sum = 0;
 
-    for (size_t i = 0; i < rows_count; ++i)
-        for (size_t j = i; j < columns_count; ++j) sum += instance[i][j];
+    for (int i = 0; i < rows_count; ++i)
+        for (int j = i; j < columns_count; ++j)
+            sum += instance[i][j];
 
     return sum;
 }
 
 // Метод для нахождения суммы элементов над побочной диагональю
 template<typename Y>
-Y Matrix<Y>::sum_above_side_diagonal() const {
+Y Matrix<Y>::sum_above_side_diagonal() {
     if (rows_count != columns_count) throw std::invalid_argument("Матрица должна быть квадратной для вычисления суммы над побочной диагональю");
 
     Y sum = 0;
 
-    for (size_t i = 0; i < rows_count; ++i)
-        for (size_t j = 0; j < columns_count; ++j)
-            if (i + j < rows_count - 1) sum += instance[i][j];
+    for (size_t i = 0; i < rows_count; i++)
+            for (size_t j = 0; j < columns_count - i - 1; j++)
+                sum += instance[i][j];
 
     return sum;
 }
 
 template<typename Y>
-Y Matrix<Y>::sum_below_main_diagonal() const {
+Y Matrix<Y>::sum_below_main_diagonal() {
     if (rows_count != columns_count) throw std::invalid_argument("Матрица должна быть квадратной для вычисления суммы под главной диагональю");
 
     Y sum = 0;
@@ -82,7 +98,7 @@ Y Matrix<Y>::sum_below_main_diagonal() const {
 }
 
 template<typename Y>
-Y Matrix<Y>::sum_below_side_diagonal() const {
+Y Matrix<Y>::sum_below_side_diagonal() {
     if (rows_count != columns_count) throw std::invalid_argument("Матрица должна быть квадратной для вычисления суммы под побочной диагональю");
 
     Y sum = 0;
@@ -114,11 +130,9 @@ template<typename Y>
 std::ostream& operator<<(std::ostream& os, const Matrix<Y>& matrix) {
 
     for (size_t i = 0; i < matrix.rows_count; ++i) {
-        os << "| ";
-
         for (size_t j = 0; j < matrix.columns_count; ++j) os << matrix.instance[i][j] << " ";
 
-        os << '|' << std::endl;
+        os << '\n';
     }
 
     return os;

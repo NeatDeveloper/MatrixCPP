@@ -9,6 +9,7 @@
     "typescript": "^5.0.0"
   },
   "scripts": {
-    "start": "g++ ./src/main.cpp -o ./build/main && ./build/main"
+    "start": "g++ ./src/main.cpp -o ./build/main && ./build/main",
+    "codeforces": "g++ ./src/codeforces.cpp -o ./build/codeforces && ./build/codeforces"
   }
 }
