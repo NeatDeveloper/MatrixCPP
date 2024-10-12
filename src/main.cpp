@@ -2,16 +2,23 @@
 #include "Matrix.h"
 
 int main() {
-    int size;
+    Matrix<int>
+        matrix_b({
+            { 1, 2, 3 },
+            { 4, 5, 6 },
+            { 7, 8, 9 }
+        }),
+        matrix_a({
+            { 10, 11, 12 },
+            { 13, 14, 15 },
+            { 16, 17, 18 }
+        });
 
-    std::cin >> size;
-
-    Matrix<int> matrix(size, 0);
-
-    std::cin >> matrix;
-
-    std::cout << matrix;
-    std::cout << matrix.sum_above_main_diagonal();
+    std::cout << matrix_a + matrix_b;
+    std::cout << matrix_a - matrix_b;
+    std::cout << matrix_a * matrix_b;
+    std::cout << matrix_a / matrix_b;
+    std::cout << matrix_a % matrix_b;
 
     return 0;
 }

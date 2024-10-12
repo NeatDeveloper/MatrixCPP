@@ -43,6 +43,14 @@ public:
     // Перегрузка оператора <<
     template<typename U>
     friend std::istream& operator>>(std::istream& is, Matrix<Y>& matrix);
+
+
+    // Перегрузка операторов + - * / %
+    Matrix<Y> operator+(const Matrix<Y>& other) const;
+    Matrix<Y> operator-(const Matrix<Y>& other) const;
+    Matrix<Y> operator*(const Matrix<Y>& other) const;
+    Matrix<Y> operator/(const Matrix<Y>& other) const;
+    Matrix<Y> operator%(const Matrix<Y>& other) const;
 };
 
 #include "Matrix.tpp"

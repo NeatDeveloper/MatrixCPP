@@ -79,8 +79,8 @@ Y Matrix<Y>::sum_above_side_diagonal() {
     Y sum = 0;
 
     for (size_t i = 0; i < rows_count; i++)
-            for (size_t j = 0; j < columns_count - i - 1; j++)
-                sum += instance[i][j];
+        for (size_t j = 0; j < columns_count - i - 1; j++)
+            sum += instance[i][j];
 
     return sum;
 }
@@ -145,4 +145,92 @@ std::istream& operator>>(std::istream& is, Matrix<Y>& matrix) {
         for (size_t j = 0; j < matrix.columns_count; ++j) is >> matrix.instance[i][j];
 
     return is;
+}
+
+
+
+template<typename Y>
+Matrix<Y> Matrix<Y>::operator+(const Matrix<Y>& other) const {
+    if(
+        rows_count != other.rows_count ||
+        columns_count != other.columns_count
+    ) throw std::invalid_argument("Матрицы должны быть одинакового размера");
+
+    Matrix<Y> sum(rows_count, columns_count, 1);
+
+    for(int i = 0; i < rows_count; i++)
+        for(int j = 0; j < columns_count; j++)
+            sum.instance[i][j] = instance[i][j] + other.instance[i][j];
+
+    return sum;
+}
+
+template<typename Y>
+Matrix<Y> Matrix<Y>::operator-(const Matrix<Y>& other) const {
+    if(
+        rows_count != other.rows_count ||
+        columns_count != other.columns_count
+    ) throw std::invalid_argument("Матрицы должны быть одинакового размера");
+
+    Matrix<Y> sum(rows_count, columns_count, 1);
+
+    for(int i = 0; i < rows_count; i++)
+        for(int j = 0; j < columns_count; j++)
+            sum.instance[i][j] = instance[i][j] - other.instance[i][j];
+
+    return sum;
+}
+
+template<typename Y>
+Matrix<Y> Matrix<Y>::operator*(const Matrix<Y>& other) const {
+    if(
+        rows_count != other.rows_count ||
+        columns_count != other.columns_count
+    ) throw std::invalid_argument("Матрицы должны быть одинакового размера");
+
+    Matrix<Y> sum(rows_count, columns_count, 1);
+
+    for(int i = 0; i < rows_count; i++)
+        for(int j = 0; j < columns_count; j++)
+            sum.instance[i][j] = instance[i][j] * other.instance[i][j];
+
+    return sum;
+}
+
+template<typename Y>
+Matrix<Y> Matrix<Y>::operator/(const Matrix<Y>& other) const {
+    if(
+        rows_count != other.rows_count ||
+        columns_count != other.columns_count
+    ) throw std::invalid_argument("Матрицы должны быть одинакового размера");
+
+    Matrix<Y> sum(rows_count, columns_count, 1);
+
+    for(int i = 0; i < rows_count; i++)
+        for(int j = 0; j < columns_count; j++) {
+            if(other.instance[i][j] == 0) throw std::invalid_argument("На ноль делить нельзя");
+
+            sum.instance[i][j] = instance[i][j] / other.instance[i][j];
+        }
+
+    return sum;
+}
+
+template<typename Y>
+Matrix<Y> Matrix<Y>::operator%(const Matrix<Y>& other) const {
+    if(
+        rows_count != other.rows_count ||
+        columns_count != other.columns_count
+    ) throw std::invalid_argument("Матрицы должны быть одинакового размера");
+
+    Matrix<Y> sum(rows_count, columns_count, 1);
+
+    for(int i = 0; i < rows_count; i++)
+        for(int j = 0; j < columns_count; j++) {
+            if(other.instance[i][j] == 0) throw std::invalid_argument("На ноль делить нельзя");
+
+            sum.instance[i][j] = instance[i][j] % other.instance[i][j];
+        }
+
+    return sum;
 }
