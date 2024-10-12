@@ -172,13 +172,13 @@ Matrix<Y> Matrix<Y>::operator-(const Matrix<Y>& other) const {
         columns_count != other.columns_count
     ) throw std::invalid_argument("Матрицы должны быть одинакового размера");
 
-    Matrix<Y> sum(rows_count, columns_count, 1);
+    Matrix<Y> difference(rows_count, columns_count, 1);
 
     for(int i = 0; i < rows_count; i++)
         for(int j = 0; j < columns_count; j++)
-            sum.instance[i][j] = instance[i][j] - other.instance[i][j];
+            difference.instance[i][j] = instance[i][j] - other.instance[i][j];
 
-    return sum;
+    return difference;
 }
 
 template<typename Y>
@@ -188,13 +188,13 @@ Matrix<Y> Matrix<Y>::operator*(const Matrix<Y>& other) const {
         columns_count != other.columns_count
     ) throw std::invalid_argument("Матрицы должны быть одинакового размера");
 
-    Matrix<Y> sum(rows_count, columns_count, 1);
+    Matrix<Y> composition(rows_count, columns_count, 1);
 
     for(int i = 0; i < rows_count; i++)
         for(int j = 0; j < columns_count; j++)
-            sum.instance[i][j] = instance[i][j] * other.instance[i][j];
+            composition.instance[i][j] = instance[i][j] * other.instance[i][j];
 
-    return sum;
+    return composition;
 }
 
 template<typename Y>
@@ -204,16 +204,16 @@ Matrix<Y> Matrix<Y>::operator/(const Matrix<Y>& other) const {
         columns_count != other.columns_count
     ) throw std::invalid_argument("Матрицы должны быть одинакового размера");
 
-    Matrix<Y> sum(rows_count, columns_count, 1);
+    Matrix<Y> quotien(rows_count, columns_count, 1);
 
     for(int i = 0; i < rows_count; i++)
         for(int j = 0; j < columns_count; j++) {
             if(other.instance[i][j] == 0) throw std::invalid_argument("На ноль делить нельзя");
 
-            sum.instance[i][j] = instance[i][j] / other.instance[i][j];
+            quotien.instance[i][j] = instance[i][j] / other.instance[i][j];
         }
 
-    return sum;
+    return quotien;
 }
 
 template<typename Y>
@@ -223,14 +223,14 @@ Matrix<Y> Matrix<Y>::operator%(const Matrix<Y>& other) const {
         columns_count != other.columns_count
     ) throw std::invalid_argument("Матрицы должны быть одинакового размера");
 
-    Matrix<Y> sum(rows_count, columns_count, 1);
+    Matrix<Y> quotien(rows_count, columns_count, 1);
 
     for(int i = 0; i < rows_count; i++)
         for(int j = 0; j < columns_count; j++) {
             if(other.instance[i][j] == 0) throw std::invalid_argument("На ноль делить нельзя");
 
-            sum.instance[i][j] = instance[i][j] % other.instance[i][j];
+            quotien.instance[i][j] = instance[i][j] % other.instance[i][j];
         }
 
-    return sum;
+    return quotien;
 }
