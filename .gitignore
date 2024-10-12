@@ -1,3 +1,4 @@
 build
 bun.lockb
 node_modules
+.vscode

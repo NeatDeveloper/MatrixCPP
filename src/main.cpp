@@ -2,14 +2,11 @@
 #include "Matrix.h"
 
 int main() {
-    Matrix<int> matrix({
-        { 1, 2, 3 },
-        { 4, 5, 6 },
-        { 7, 8, 9 }
-    });
+    Matrix<int> matrix(3, 3);
 
-    std::cout << matrix;
-    std::cout << matrix.T();
+    std::cin >> matrix;
+
+    std::cout << matrix.is_cute();
 
     return 0;
 }

@@ -4,29 +4,31 @@
 #include <iostream>
 #include <vector>
 #include <stdexcept>
-#include <memory>
 
 template<typename Y>
 class Matrix {
-private:
+public:
     std::vector<std::vector<Y>> instance;
 
-
-public:
-
     Matrix(const std::vector<std::vector<Y>>& matrix);
+    Matrix(size_t rows, size_t columns);
 
     std::size_t rows_count;
     std::size_t columns_count;
 
     Matrix<Y> T() const;
 
-    void draw() const;
-
     Y get_elem(std::size_t row, std::size_t column) const;
 
     bool set_elem(std::size_t row, std::size_t column, Y value);
 
+    Y sum_above_main_diagonal() const;
+    Y sum_above_side_diagonal() const;
+
+    Y sum_below_main_diagonal() const;
+    Y sum_below_side_diagonal() const;
+
+    bool is_cute();
 
     // Перегрузки
     // Перегрузка оператора <<
