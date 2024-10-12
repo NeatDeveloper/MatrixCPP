@@ -1,0 +1,14 @@
+{
+  "name": "matrixcpp",
+  "module": "src/main.cpp",
+  "type": "module",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "scripts": {
+    "start": "g++ ./src/main.cpp -o ./build/main && ./build/main"
+  }
+}
